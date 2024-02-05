@@ -44,13 +44,13 @@ const expense = computed( () => {
 
 //handle transcation submitted
 const handleTransactionSubmitted = (transactionData) => {
-  transaction.value.push({
+  transactions.value.push({
     id: generateUniqueId(),
     text: transactionData.text,
     amount: transactionData.amount,
   })
 
-  saveTransactionToLocalStorage()
+  saveTransactionsToLocalStorage()
   toast.success('Transaction Added')
 }
 
@@ -60,14 +60,14 @@ const generateUniqueId = () => {
 }
 
 //delete transaction
-const handleTransactionDeleted = (id) => {
+const handleTransactionsDeleted = (id) => {
   transactions.value = transactions.value.filter((transaction) => transaction.id !== id)
-  saveTransactionToLocalStorage()
+  saveTransactionsToLocalStorage()
   toast.success('Transaction Deleted')
 }
 
 //save to local storage
-const saveTransactionToLocalStorage = () => {
+const saveTransactionsToLocalStorage = () => {
   localStorage.setItem('transactions', JSON.stringify(transactions.value))
 }
 
@@ -86,9 +86,9 @@ onMounted(() => {
 <template>
   <Header></Header>
   <div class="container">
-    <Balance :total="total"></Balance>
-    <IncomeExpenses :income="income" :expense="expense"></IncomeExpenses>
-    <TransactionList :transactions="transactions" @transactionDeleted="handleTransactionDeleted"></TransactionList>
+    <Balance :total="+total"></Balance>
+    <IncomeExpenses :income="+income" :expense="+expense"></IncomeExpenses>
+    <TransactionList :transactions="transactions" @transactionDeleted="handleTransactionsDeleted"></TransactionList>
     <AddTransaction @transactionSubmitted="handleTransactionSubmitted"></AddTransaction>
     <!-- {{ transactions }}-->
   </div>
